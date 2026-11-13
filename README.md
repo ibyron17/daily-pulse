@@ -336,7 +336,7 @@ python -m pulse.publish collect --config config.yaml --period daily \
 ### Inject (주입)
 
 ```bash
-python -m pulse.publish inject --config config.yaml summary.json \
+python -m pulse.publish inject --config config.yaml --summary-file summary.json \
   --period daily --ad-hoc --date 2026-07-20
 ```
 

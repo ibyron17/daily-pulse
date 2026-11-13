@@ -84,7 +84,9 @@ def _parse_now_override(value: str) -> datetime:
         ValueError: 타임존 정보 없음 또는 파싱 실패
     """
     try:
-        dt = datetime.fromisoformat(value)
+        # Python 3.10 의 fromisoformat 은 끝의 Z(UTC)를 읽지 못해 끝자리만 +00:00 으로 바꾼다.
+        normalized = value[:-1] + "+00:00" if value.endswith("Z") else value
+        dt = datetime.fromisoformat(normalized)
         if dt.tzinfo is None:
             raise ValueError("--now는 타임존을 포함해야 합니다. 예: 2026-07-22T00:00:00+09:00")
         return dt
