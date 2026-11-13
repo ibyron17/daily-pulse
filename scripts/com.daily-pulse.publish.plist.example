@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Daily Pulse 정기 발행 스케줄 (매일 09:00, 잠자기 중 놓치면 깨어날 때 실행)
+     설치: scripts/scheduled-publish.sh 상단 주석 참조 -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.daily-pulse.publish</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/path/to/daily-pulse/scripts/scheduled-publish.sh</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/path/to/daily-pulse</string>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>9</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/USERNAME/Library/Logs/daily-pulse/launchd.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/USERNAME/Library/Logs/daily-pulse/launchd.err.log</string>
+</dict>
+</plist>

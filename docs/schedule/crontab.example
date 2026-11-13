@@ -1,0 +1,44 @@
+# Daily Pulse crontab 설정 예시
+# KST 08:00 평일(월-금) 자동 실행
+#
+# 사용법:
+#   1. 이 파일의 경로와 토큰 방식을 수정하십시오
+#   2. crontab -e 로 편집 모드 진입
+#   3. 아래 줄을 복사해서 붙여넣기
+#   4. wq (저장)
+#   5. crontab -l 로 확인
+
+# === 절대 경로를 사용하세요 (중요!) ===
+# 크론은 특정 디렉토리 컨텍스트를 가정하지 않으므로,
+# .venv, config.yaml, reports 모두 절대 경로로 지정해야 합니다.
+
+# === 환경변수 설정 ===
+# 크론이 시스템 경로/환경변수를 온전히 상속하지 않으므로,
+# PATH와 GITLAB_TOKEN을 명시적으로 주입합니다.
+
+# === 예시 (실제 환경에 맞게 수정) ===
+#
+# 시간  분  *  *  요일(1-5=월-금)  명령
+# |    |
+# |    +---- 분 (0-59)
+# +--------- 시간 (0-23, UTC 기준이 아니라 로컬 시간으로 설정)
+#
+# KST 08:00 = UTC 23:00 (여름) 또는 UTC 00:00 (겨울)
+# 하지만 로컬 타임존이 이미 KST로 설정되어 있다면:
+#
+
+# 방법 1: 직접 crontab에 추가 (권장)
+0 8 * * 1-5 cd /path/to/daily-pulse && /path/to/daily-pulse/.venv/bin/python daily_pulse.py >> cron.log 2>&1
+
+# 방법 2: 환경변수를 명시적으로 주입하려면
+# PATH=/usr/bin:/bin:/usr/sbin:/sbin
+# GITLAB_TOKEN=<발급받은_토큰으로_교체>
+# 0 8 * * 1-5 /path/to/daily-pulse/.venv/bin/python /path/to/daily-pulse/daily_pulse.py --config /path/to/daily-pulse/config.yaml >> /path/to/daily-pulse/cron.log 2>&1
+
+# === 팁 ===
+# - cron.log 위치: /path/to/daily-pulse/cron.log
+#   (매 실행마다 append되므로, 주기적으로 정리하세요)
+# - 시간 확인: date (로컬 타임존 확인)
+# - crontab 시간이 의도와 다르면, TZ 환경변수로 명시:
+#   TZ=Asia/Seoul
+#   0 8 * * 1-5 /path/to/script

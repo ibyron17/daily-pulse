@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- 서비스 라벨 (고유 ID) -->
+    <key>Label</key>
+    <string>com.daily-pulse.automation</string>
+
+    <!-- 실행할 프로그램 -->
+    <!-- 절대 경로를 사용하세요 -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/path/to/daily-pulse/.venv/bin/python</string>
+        <string>/path/to/daily-pulse/daily_pulse.py</string>
+    </array>
+
+    <!-- 작업 디렉토리 -->
+    <!-- config.yaml을 읽을 때 사용 -->
+    <key>WorkingDirectory</key>
+    <string>/path/to/daily-pulse</string>
+
+    <!-- 실행 일정 -->
+    <!-- KST 08:00 평일(월-금) -->
+    <key>StartCalendarInterval</key>
+    <array>
+        <!-- 월요일 08:00 -->
+        <dict>
+            <key>Weekday</key>
+            <integer>1</integer>
+            <key>Hour</key>
+            <integer>8</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <!-- 화요일 08:00 -->
+        <dict>
+            <key>Weekday</key>
+            <integer>2</integer>
+            <key>Hour</key>
+            <integer>8</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <!-- 수요일 08:00 -->
+        <dict>
+            <key>Weekday</key>
+            <integer>3</integer>
+            <key>Hour</key>
+            <integer>8</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <!-- 목요일 08:00 -->
+        <dict>
+            <key>Weekday</key>
+            <integer>4</integer>
+            <key>Hour</key>
+            <integer>8</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <!-- 금요일 08:00 -->
+        <dict>
+            <key>Weekday</key>
+            <integer>5</integer>
+            <key>Hour</key>
+            <integer>8</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+    </array>
+
+    <!-- 로그 파일 -->
+    <key>StandardOutPath</key>
+    <string>/path/to/daily-pulse/launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/path/to/daily-pulse/launchd.error.log</string>
+
+    <!-- 환경 변수 -->
+    <!--
+    주의: GITLAB_TOKEN을 여기에 넣지 마세요!
+    PAT는 평문 저장되므로 보안 위험입니다.
+    대신 ~/.zshrc 또는 ~/.bash_profile에서 로드하세요:
+
+        export GITLAB_TOKEN="glpat-..."
+
+    launchd는 일반 셸을 거치지 않고 직접 실행되므로,
+    셸 설정의 환경변수를 상속하지 않을 수 있습니다.
+    이 경우 다음 방법 중 하나를 선택하세요:
+
+    방법 1: launchd 실행 전에 한 번 수동으로 설정
+        launchctl setenv GITLAB_TOKEN "glpat-..."
+        launchctl load ~/Library/LaunchAgents/com.daily-pulse.automation.plist
+
+    방법 2: ~/Library/LaunchAgents 위 디렉토리의 다른 plist에서
+          먼저 환경변수를 설정하고 순서를 보장
+
+    방법 3: 스크립트 래퍼 생성 (권장)
+        #!/bin/bash
+        source ~/.zshrc
+        /path/to/daily-pulse/.venv/bin/python \
+            /path/to/daily-pulse/daily_pulse.py
+
+        이를 /path/to/daily-pulse/run.sh로 저장하고
+        ProgramArguments에서 /bin/bash /path/to/daily-pulse/run.sh로 호출
+    -->
+
+    <!-- 자동 재시작 (실패 시) -->
+    <key>KeepAlive</key>
+    <false/>
+
+    <!-- 스케줄에 따라서만 실행 -->
+    <key>RunAtLoad</key>
+    <false/>
+
+    <!-- 오류 시 지연 재시작 -->
+    <key>ThrottleInterval</key>
+    <integer>300</integer>
+</dict>
+</plist>
+
+<!--
+=== 설치 및 관리 명령어 ===
+
+1. 이 파일을 복사하고 경로와 환경변수 방식을 수정한 후:
+
+   cp docs/schedule/launchd.example.plist ~/Library/LaunchAgents/com.daily-pulse.automation.plist
+
+2. 로드:
+
+   launchctl load ~/Library/LaunchAgents/com.daily-pulse.automation.plist
+
+3. 상태 확인:
+
+   launchctl list | grep daily-pulse
+
+4. 로그 확인:
+
+   tail -f /path/to/daily-pulse/launchd.log
+   tail -f /path/to/daily-pulse/launchd.error.log
+
+5. 언로드 (제거):
+
+   launchctl unload ~/Library/LaunchAgents/com.daily-pulse.automation.plist
+
+6. 수동 실행 (테스트):
+
+   launchctl start com.daily-pulse.automation
+
+=== 트러블슈팅 ===
+
+- "Launch failed": plist 형식 오류 — plutil 로 검증하세요
+  plutil -lint ~/Library/LaunchAgents/com.daily-pulse.automation.plist
+
+- 환경변수 미상속: 위 "방법 3: 스크립트 래퍼"를 사용하세요
+
+- 작업이 실행되지 않음: 로그 파일을 확인하고, launchctl list로 상태 확인
+
+-->

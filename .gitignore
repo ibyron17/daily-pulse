@@ -1,0 +1,31 @@
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+data/
+reports/
+config.yaml
+# 발행 중간 산출물 (정기 발행이 루트에 재생성 — 팀 활동 데이터, 커밋 금지)
+collect.json
+collect_weekly.json
+collect_merged.json
+weekly_collect.json
+summary.json
+combined_collect.json
+combined_summary.json
+collect_*.log
+# 헤드리스 러너가 단계별 stderr를 리다이렉트해 남기는 파일 (collect.err 등)
+*.err
+*_err.txt
+*_stderr.txt
+*_stderr.log
+inject_*_out.md
+# 세션별 진행상황 대시보드 (일회성 로컬 산출물)
+.claude/dashboards/
+
+# Claude Code 세션 잠금 파일 — 개인 환경 메타데이터라 추적하지 않는다
+.claude/scheduled_tasks.lock

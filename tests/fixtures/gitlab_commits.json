@@ -1,0 +1,23 @@
+[
+  {
+    "id": "abc123def456",
+    "author_name": "hong-gildong",
+    "authored_date": "2026-07-15T09:00:00Z",
+    "message": "feat: editor autosave\n\nAdded autosave feature to editor",
+    "web_url": "https://gitlab.example.com/sample-group/sample-repo/-/commit/abc123def456"
+  },
+  {
+    "id": "def456ghi789",
+    "author_name": "kim-suji",
+    "authored_date": "2026-07-15T08:30:00Z",
+    "message": "fix: button styling",
+    "web_url": "https://gitlab.example.com/sample-group/sample-repo/-/commit/def456ghi789"
+  },
+  {
+    "id": "ghi789jkl012",
+    "author_name": "bot-service",
+    "authored_date": "2026-07-15T07:00:00Z",
+    "message": "chore: automated update",
+    "web_url": "https://gitlab.example.com/sample-group/sample-repo/-/commit/ghi789jkl012"
+  }
+]

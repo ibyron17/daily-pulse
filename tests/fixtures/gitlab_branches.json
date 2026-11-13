@@ -1,0 +1,54 @@
+[
+  {
+    "name": "develop",
+    "default": true,
+    "commit": {
+      "id": "abc123def456",
+      "committed_date": "2026-07-15T09:00:00Z",
+      "message": "merge feature/foo",
+      "author_name": "hong-gildong"
+    },
+    "web_url": "https://gitlab.example.com/sample-group/sample-repo/-/tree/develop"
+  },
+  {
+    "name": "feature/editor",
+    "commit": {
+      "id": "def456ghi789",
+      "committed_date": "2026-07-15T08:30:00Z",
+      "message": "feat: editor component",
+      "author_name": "kim-suji"
+    },
+    "web_url": "https://gitlab.example.com/sample-group/sample-repo/-/tree/feature/editor"
+  },
+  {
+    "name": "old-branch",
+    "commit": {
+      "id": "ghi789jkl012",
+      "committed_date": "2026-07-10T10:00:00Z",
+      "message": "old work",
+      "author_name": "lee-jiho"
+    },
+    "web_url": "https://gitlab.example.com/sample-group/sample-repo/-/tree/old-branch"
+  },
+  {
+    "name": "release/v1.0",
+    "merged": true,
+    "commit": {
+      "id": "jkl012mno345",
+      "committed_date": "2026-07-08T14:00:00Z",
+      "message": "release: v1.0.0",
+      "author_name": "park-min"
+    },
+    "web_url": "https://gitlab.example.com/sample-group/sample-repo/-/tree/release/v1.0"
+  },
+  {
+    "name": "stale-work",
+    "commit": {
+      "id": "mno345pqr678",
+      "committed_date": "2026-07-05T11:20:00Z",
+      "message": "experimental code",
+      "author_name": "choi-seon"
+    },
+    "web_url": "https://gitlab.example.com/sample-group/sample-repo/-/tree/stale-work"
+  }
+]

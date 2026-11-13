@@ -1,0 +1,62 @@
+[
+  {
+    "iid": 42,
+    "title": "feat: editor autosave",
+    "state": "opened",
+    "draft": false,
+    "work_in_progress": false,
+    "labels": ["enhancement", "ui"],
+    "source_branch": "feature/editor-autosave",
+    "target_branch": "develop",
+    "author": {
+      "username": "hong-gildong",
+      "name": "Hong Gil-dong"
+    },
+    "created_at": "2026-07-14T09:00:00Z",
+    "updated_at": "2026-07-15T09:30:00Z",
+    "merged_at": null,
+    "source_project_id": 12345,
+    "target_project_id": 12345,
+    "web_url": "https://gitlab.example.com/sample-group/sample-repo/-/merge_requests/42"
+  },
+  {
+    "iid": 41,
+    "title": "fix: button styling",
+    "state": "merged",
+    "draft": false,
+    "work_in_progress": false,
+    "labels": ["bugfix"],
+    "source_branch": "fix/button-style",
+    "target_branch": "develop",
+    "author": {
+      "username": "kim-suji",
+      "name": "Kim Su-ji"
+    },
+    "created_at": "2026-07-13T10:00:00Z",
+    "updated_at": "2026-07-15T08:00:00Z",
+    "merged_at": "2026-07-15T08:00:00Z",
+    "source_project_id": 12345,
+    "target_project_id": 12345,
+    "web_url": "https://gitlab.example.com/sample-group/sample-repo/-/merge_requests/41"
+  },
+  {
+    "iid": 40,
+    "title": "refactor: old code cleanup",
+    "state": "closed",
+    "draft": false,
+    "work_in_progress": false,
+    "labels": [],
+    "source_branch": "feature/old-idea",
+    "target_branch": "develop",
+    "author": {
+      "username": "lee-jiho",
+      "name": "Lee Ji-ho"
+    },
+    "created_at": "2026-07-10T09:00:00Z",
+    "updated_at": "2026-07-12T14:00:00Z",
+    "merged_at": null,
+    "source_project_id": 12345,
+    "target_project_id": 12345,
+    "web_url": "https://gitlab.example.com/sample-group/sample-repo/-/merge_requests/40"
+  }
+]

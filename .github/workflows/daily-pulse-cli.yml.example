@@ -1,0 +1,54 @@
+name: Daily Pulse CLI (No AI Summary)
+
+on:
+  schedule:
+    # UTC 기준. KST는 UTC+9이므로 1:00 UTC = 10:00 KST (매일 아침 10시)
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Daily Pulse Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+
+      - name: Run Daily Pulse (CLI only, no AI summary)
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python daily_pulse.py --config config.yaml
+
+      # 선택: GitHub Pages 또는 S3에 리포트 배포
+      # 이 부분은 배포 환경에 맞게 수정하세요.
+      # - name: Upload reports
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: daily-pulse-reports
+      #     path: reports/
+
+# 참고 (이 파일은 예시이며, 사용하려면 .github/workflows/ 아래로 복사하고 확장자 .example 을 뗍니다)
+#
+# 이 워크플로우는 "요약 없는" CLI 폴백으로, 순수 Python 파이프라인만 실행합니다.
+#
+# AI 요약이 필요하면 Claude Code Skill 을 사용하세요:
+#   1. `.claude/skills/daily-pulse-publish-daily`(일간) 또는
+#      `.claude/skills/daily-pulse-publish-weekly`(주간) 스킬 설치
+#   2. Claude Code 에서 "일간 발행해줘" 또는 "주간 발행해줘" 요청
+#
+# 주의:
+#   - GitHub Actions 러너(ubuntu-latest)는 사설망의 자체 호스팅 GitLab 에 접근할 수 없습니다.
+#     그런 GitLab 을 대상으로 하려면 self-hosted 러너 설정이 필요합니다.
+#   - 공개 GitHub 레포만 대상인 경우 이 워크플로우를 그대로 사용할 수 있습니다.

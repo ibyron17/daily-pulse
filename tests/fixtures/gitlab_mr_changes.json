@@ -1,0 +1,23 @@
+{
+  "id": 234,
+  "iid": 42,
+  "project_id": 3,
+  "title": "feat: 결제 모듈",
+  "state": "opened",
+  "changes": [
+    {
+      "old_path": "sample-model/src/payment.ts",
+      "new_path": "sample-model/src/payment.ts",
+      "new_file": false,
+      "deleted_file": false,
+      "renamed_file": false
+    },
+    {
+      "old_path": "other-lib/src/index.ts",
+      "new_path": "other-lib/src/index.ts",
+      "new_file": false,
+      "deleted_file": false,
+      "renamed_file": false
+    }
+  ]
+}

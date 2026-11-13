@@ -1,0 +1,23 @@
+[
+  {
+    "new_path": "src/editor.ts",
+    "old_path": "src/editor.ts",
+    "new_file": false,
+    "deleted_file": false,
+    "renamed_file": false
+  },
+  {
+    "new_path": "src/components/Editor.tsx",
+    "old_path": "src/components/Editor.tsx",
+    "new_file": false,
+    "deleted_file": false,
+    "renamed_file": false
+  },
+  {
+    "new_path": "tests/editor.test.ts",
+    "old_path": null,
+    "new_file": true,
+    "deleted_file": false,
+    "renamed_file": false
+  }
+]

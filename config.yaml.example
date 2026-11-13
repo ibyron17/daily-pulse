@@ -1,0 +1,74 @@
+# Daily Pulse 설정 — config.yaml로 복사해서 사용하세요.
+# 인증 토큰은 이 파일이 아니라 환경변수로 주입합니다:
+#   GitLab: GITLAB_TOKEN (read_api 스코프) / GitHub: GITHUB_TOKEN
+team_name: "샘플 팀"
+
+# 전체 URL 권장 (host로 GitLab/GitHub 자동 판별).
+# "namespace/name" 축약형은 아래 gitlab_url 기준으로 해석됩니다.
+gitlab_url: "https://gitlab.example.com"
+repos:
+  # 문자열 형식 (기존, 닉네임 없음)
+  - "https://gitlab.example.com/sample-group/sample-repo"
+
+  # dict 형식 (신규, 닉네임 지정 가능)
+  # - url: "https://gitlab.example.com/sample-group/sample-repo"
+  #   nickname: "UI 마이크로"
+  #   base_branch: "develop"   # 이 레포의 개발 기준선 (생략 시 자동 판별)
+  #   subtree_path: "path/in/repo"   # 이 서브디렉토리를 건드린 커밋·MR만 수집
+  #                                  # (GitLab 전용, 생략 시 레포 전체 수집)
+
+  # - url: "https://github.com/my-org/some-repo"
+  #   nickname: "GitHub 프로젝트"
+
+  # base_branch를 지정하는 이유:
+  #   브랜치 히스토리는 "어디서 갈라졌나"를 기준으로 계산한다. gitflow 레포에서는
+  #   default_branch(master)와 실제 개발 기준선(develop)이 달라, 자동 판별에 맡기면
+  #   후보마다 분기점을 조회해야 한다(브랜치당 API 호출 증가).
+  #   명시하면 조회가 1회로 줄고 기준선이 확정된다.
+
+lookback_hours: 24
+weekend_catchup: true        # 직전 영업일(월~금, 공휴일 제외) 00:00부터 조회 — 월요일은 금~일 72시간
+                             # lookback_hours는 이 경우 최소 폭. false면 lookback_hours 그대로(공휴일 무시)
+                             # 단, 주간 발행일 판단은 이 값과 무관하게 공휴일을 반영한다
+# extra_holidays:            # 선택 — 내장 한국 공휴일 표(pulse/kr_holidays.py)에 없는 휴무일
+#   - 2026-12-24             # (임시공휴일·회사 휴무). YYYY-MM-DD. 이 날은 영업일로 세지 않습니다
+#                            # 일간 조회 기간과 주간 발행일 판단에 쓰인다
+# holiday_calendar: kr       # 선택 — 쓸 공휴일 표. kr(기본) = 내장 한국 공휴일 표, none = 표 미사용
+#                            # none 이면 쉬는 날은 주말과 extra_holidays 뿐. 비우거나 null·no·off 는 오류
+timezone: "Asia/Seoul"
+output_dir: "./reports"
+data_dir: "./data"
+
+stagnation_thresholds:
+  review_waiting_days: 3     # 이 일수 이상 리뷰 대기 중인 MR을 경고 표시
+  no_push_days: 7            # 이 일수 이상 push 없는 오픈 브랜치를 경고 표시
+
+exclude_bot_authors: []      # 예: ["dependabot[bot]", "Renovate Bot"]
+                               # 커밋·MR 작성자의 표시 이름에 대한 부분 문자열 매칭.
+                               # MR 작성자는 GitLab 계정 표시 이름(name) 기준이므로,
+                               # 봇 계정을 제외하려면 로그인 ID가 아닌 표시 이름으로 지정합니다.
+retention_days: 90           # raw/snapshots/reports 보존 일수 (latest.html 제외)
+
+grouping_hints:              # 선택 — 자동 분류보다 우선 적용
+  branch_prefixes: {}        # 예: { "feature/login": "로그인 개편" }
+  directories: {}            # 예: { "src/components/editor": "에디터" }
+  labels: {}                 # 예: { "payment": "결제" }
+  # release/integration 라인 판별 패턴 (선택 — 생략 시 기본값 사용).
+  # 그룹의 브랜치명(또는 브랜치 없는 그룹의 이름)이 대소문자 무시 완전 일치하면
+  # "릴리스/검증 라인"으로 분류돼 기능 목록과 분리 표시됩니다.
+  # release_line_patterns: ["main", "master", "develop", "dev", "test", "sqa", "devqa", "release", "hotfix"]
+
+issue_tracking:              # 선택 — 이슈 키(예: DOCS-123) 링크화
+  # 설정하면 대시보드에서 커밋/브랜치/MR 제목에서 추출한 이슈 키가 링크로 표시됩니다.
+  # 트래커 API는 호출하지 않습니다 ({key}가 키로 치환될 뿐).
+  # url_template: "https://jira.example.com/browse/{key}"
+
+history:                     # 선택 — 브랜치 생애 히스토리 (분기점부터의 진행 서사)
+  enabled: true              # false면 조회·표시를 모두 건너뜁니다
+  max_history_commits: 1000  # 브랜치당 커밋 수집 상한.
+                             # 1년 전 갈라진 브랜치가 활동을 재개하면 히스토리가 수천 건이
+                             # 될 수 있습니다. 상한에 닿으면 "N건 이상"으로 표시하고
+                             # 경고 로그를 남깁니다(조용히 잘라내지 않습니다).
+  min_tag_coverage: 0.5      # 커밋 태그([feat]/feat:/feat(scope):) 인식률이 이 값 미만이면
+                             # 작업 성격 표시를 생략합니다. 자유 서술 관례의 레포에서
+                             # "미인식 100%"를 띄우지 않기 위한 장치입니다.
