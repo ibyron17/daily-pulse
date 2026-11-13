@@ -12,7 +12,7 @@ repos:
 
   # dict 형식 (신규, 닉네임 지정 가능)
   # - url: "https://gitlab.example.com/sample-group/sample-repo"
-  #   nickname: "UI 마이크로"
+  #   nickname: "샘플 프론트엔드"
   #   base_branch: "develop"   # 이 레포의 개발 기준선 (생략 시 자동 판별)
   #   subtree_path: "path/in/repo"   # 이 서브디렉토리를 건드린 커밋·MR만 수집
   #                                  # (GitLab 전용, 생략 시 레포 전체 수집)
